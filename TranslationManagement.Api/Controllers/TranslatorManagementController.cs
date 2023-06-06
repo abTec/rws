@@ -53,7 +53,7 @@ namespace TranslationManagement.Api.Controlers
         public string UpdateTranslatorStatus(int Translator, string newStatus = "")
         {
             _logger.LogInformation("User status update request: " + newStatus + " for user " + Translator.ToString());
-            if (TranslatorStatuses.Where(status => status == newStatus).Count() == 0)
+            if (!TranslatorStatuses.Where(status => status == newStatus).Any())
             {
                 throw new ArgumentException("unknown status");
             }
