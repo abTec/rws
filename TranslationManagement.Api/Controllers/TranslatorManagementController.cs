@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,43 +11,36 @@ namespace TranslationManagement.Api.Controlers
     [Route("api/TranslatorsManagement/[action]")]
     public class TranslatorManagementController : ControllerBase
     {
-        public class TranslatorModel
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public string HourlyRate { get; set; }
-            public string Status { get; set; }
-            public string CreditCardNumber { get; set; }
-        }
+
 
         public static readonly string[] TranslatorStatuses = { "Applicant", "Certified", "Deleted" };
 
         private readonly ILogger<TranslatorManagementController> _logger;
-        private AppDbContext _context;
+        
 
         public TranslatorManagementController(IServiceScopeFactory scopeFactory, ILogger<TranslatorManagementController> logger)
         {
-            _context = scopeFactory.CreateScope().ServiceProvider.GetService<AppDbContext>();
             _logger = logger;
         }
 
         [HttpGet]
-        public TranslatorModel[] GetTranslators()
+        public TranslatorDto[] GetTranslators()
         {
-            return _context.Translators.ToArray();
+            return null;
         }
 
         [HttpGet]
-        public TranslatorModel[] GetTranslatorsByName(string name)
+        public TranslatorDto[] GetTranslatorsByName(string name)
         {
-            return _context.Translators.Where(t => t.Name == name).ToArray();
+            return null;/*_context.Translators.Where(t => t.Name == name).ToArray();*/
         }
 
         [HttpPost]
-        public bool AddTranslator(TranslatorModel translator)
+        public bool AddTranslator(TranslatorDto translator)
         {
-            _context.Translators.Add(translator);
-            return _context.SaveChanges() > 0;
+            return false;
+            //_context.Translators.Add(translator);
+            //return _context.SaveChanges() > 0;
         }
 
         [HttpPost]
@@ -58,9 +52,9 @@ namespace TranslationManagement.Api.Controlers
                 throw new ArgumentException("unknown status");
             }
 
-            var job = _context.Translators.Single(j => j.Id == Translator);
-            job.Status = newStatus;
-            _context.SaveChanges();
+            //var job = _context.Translators.Single(j => j.Id == Translator);
+            //job.Status = newStatus;
+            //_context.SaveChanges();
 
             return "updated";
         }
