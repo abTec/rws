@@ -4,6 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using DataAccess;
+using Application.Contracts;
+using DataAccess.Repositories;
 
 namespace TranslationManagement.Api
 {
@@ -18,6 +21,7 @@ namespace TranslationManagement.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ITranslationJobRepository, TranslationJobRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
