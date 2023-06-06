@@ -1,13 +1,12 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Xml;
-using System.Xml.Linq;
-using External.ThirdParty.Services;
+﻿using External.ThirdParty.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
+using System.Linq;
+using System.Xml.Linq;
 using TranslationManagement.Api.Controlers;
 
 namespace TranslationManagement.Api.Controllers
@@ -111,7 +110,7 @@ namespace TranslationManagement.Api.Controllers
         public string UpdateJobStatus(int jobId, int translatorId, string newStatus = "")
         {
             _logger.LogInformation("Job status update request received: " + newStatus + " for job " + jobId.ToString() + " by translator " + translatorId);
-            if (typeof(JobStatuses).GetProperties().Count(prop => prop.Name == newStatus) == 0)
+            if (!typeof(JobStatuses).GetProperties().Any(prop => prop.Name == newStatus))
             {
                 return "invalid status";
             }

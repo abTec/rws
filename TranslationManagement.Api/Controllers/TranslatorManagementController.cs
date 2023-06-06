@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
 
 namespace TranslationManagement.Api.Controlers
 {
@@ -48,7 +48,7 @@ namespace TranslationManagement.Api.Controlers
             _context.Translators.Add(translator);
             return _context.SaveChanges() > 0;
         }
-        
+
         [HttpPost]
         public string UpdateTranslatorStatus(int Translator, string newStatus = "")
         {
