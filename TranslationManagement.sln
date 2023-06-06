@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30717.126
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.Api", "TranslationManagement.Api\TranslationManagement.Api.csproj", "{CF6B0818-2953-48BA-9036-3F75D92E0F13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranslationManagement.Api", "TranslationManagement.Api\TranslationManagement.Api.csproj", "{CF6B0818-2953-48BA-9036-3F75D92E0F13}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8547FBF7-7179-421B-80BD-2E293D0807A6}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,13 +12,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme.md = readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "External.ThirdParty.Services", "External.ThirdParty.Services\External.ThirdParty.Services.csproj", "{173F3433-4139-404D-A843-BAF43F6164FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "External.ThirdParty.Services", "External.ThirdParty.Services\External.ThirdParty.Services.csproj", "{173F3433-4139-404D-A843-BAF43F6164FA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleData", "SampleData", "{B01CF39A-A9B6-468F-9BC6-06D418302340}"
 	ProjectSection(SolutionItems) = preProject
 		job.txt = job.txt
 		job.xml = job.xml
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99. Tests", "99. Tests", "{BEA4BD54-6871-40D4-9CB3-9D02874DB402}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01. Common", "01. Common", "{B50B6504-FBED-4580-88C6-ABA26FD5BBC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Application", "02. Application", "{8440F3C5-0B6C-4101-B020-799CB7BC72CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. DAL", "03. DAL", "{8805327F-6892-4B13-A5C8-B1B7D04F9775}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04. Domain", "04. Domain", "{159257FE-E447-4FEB-9A76-439E922C0258}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "09. Clients", "09. Clients", "{B1C278F4-9B6D-45F5-8544-C07BA229962B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +49,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CF6B0818-2953-48BA-9036-3F75D92E0F13} = {B1C278F4-9B6D-45F5-8544-C07BA229962B}
+		{8547FBF7-7179-421B-80BD-2E293D0807A6} = {B50B6504-FBED-4580-88C6-ABA26FD5BBC3}
+		{173F3433-4139-404D-A843-BAF43F6164FA} = {B50B6504-FBED-4580-88C6-ABA26FD5BBC3}
+		{B01CF39A-A9B6-468F-9BC6-06D418302340} = {B50B6504-FBED-4580-88C6-ABA26FD5BBC3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {821E39E6-0BB8-498C-9510-D913968AA6FF}
