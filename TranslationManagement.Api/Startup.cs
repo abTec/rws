@@ -1,4 +1,5 @@
 using Application.Contracts;
+using Application.CQRS.CommandHandlers;
 using AutoMapper;
 using DataAccess;
 using DataAccess.Repositories;
@@ -23,8 +24,6 @@ namespace TranslationManagement.Api
         public void ConfigureServices(IServiceCollection services)
         {
             RegisterServices(services);
-
-
 
             IMapper mapper = AutoMapperConfiguration.ConfigureMapping().CreateMapper();
             services.AddSingleton(mapper);
@@ -52,10 +51,11 @@ namespace TranslationManagement.Api
             });
         }
 
-        private void RegisterServices(IServiceCollection services)
+        private static void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<ITranslationJobRepository, TranslationJobRepository>();
             services.AddScoped<ITranslatorRepository, TranslatorRepository>();
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateTranslationJobHandler>());
         }
     }
 }

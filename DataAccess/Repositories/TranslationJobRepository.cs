@@ -14,9 +14,9 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
-        public override Task<TranslationJob> Create(TranslationJob entity)
+        public override Task<bool> Create(TranslationJob entity)
         {
-            entity.Status = "New"; 
+            entity.Status = "New";
             return base.Create(entity);
         }
 

@@ -8,22 +8,21 @@ namespace DataAccess.Repositories
 {
     public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
-        private readonly AppDbContext _context;
+        protected readonly AppDbContext Context;
         private DbSet<TEntity> _dbSet;
 
         public Repository(AppDbContext context)
         {
-            _context = context;
+            Context = context;
             _dbSet = context.Set<TEntity>();
         }
 
         public async Task<ICollection<TEntity>> GetAll() => await _dbSet.ToListAsync();
 
-        public virtual async Task<TEntity> Create(TEntity entity)
+        public virtual async Task<bool> Create(TEntity entity)
         {
             _dbSet.Add(entity);
-            await _context.SaveChangesAsync();
-            return entity;
+            return await Context.SaveChangesAsync() > 0;
         }
 
         public async Task Delete(int id)
@@ -33,8 +32,7 @@ namespace DataAccess.Repositories
 
             _dbSet.Remove(entity);
 
-            await _context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
         }
-
     }
 }

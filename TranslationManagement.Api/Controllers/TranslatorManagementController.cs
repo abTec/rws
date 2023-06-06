@@ -1,9 +1,12 @@
-﻿using Application.Models;
+﻿using Application.CQRS.Commands;
+using Application.CQRS.Queries;
+using Application.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace TranslationManagement.Api.Controlers
 {
@@ -11,42 +14,38 @@ namespace TranslationManagement.Api.Controlers
     [Route("api/TranslatorsManagement/[action]")]
     public class TranslatorManagementController : ControllerBase
     {
-
-
         public static readonly string[] TranslatorStatuses = { "Applicant", "Certified", "Deleted" };
-
+        private readonly IMediator mediator;
         private readonly ILogger<TranslatorManagementController> _logger;
-        
 
-        public TranslatorManagementController(IServiceScopeFactory scopeFactory, ILogger<TranslatorManagementController> logger)
+        public TranslatorManagementController(IMediator mediator, ILogger<TranslatorManagementController> logger)
         {
+            this.mediator = mediator;
             _logger = logger;
         }
 
         [HttpGet]
-        public TranslatorDto[] GetTranslators()
+        public async Task<TranslatorDto[]> GetTranslators()
         {
-            return null;
+            var result = await mediator.Send(new GetAllTranslators());
+            return result.ToArray();
         }
 
         [HttpGet]
-        public TranslatorDto[] GetTranslatorsByName(string name)
+        public async Task<TranslatorDto[]> GetTranslatorsByName(string name)
         {
-            return null;/*_context.Translators.Where(t => t.Name == name).ToArray();*/
+            var result = await mediator.Send(new GetTranslatorsByName { Name = name });
+
+            return result.ToArray();
         }
 
         [HttpPost]
-        public bool AddTranslator(TranslatorDto translator)
-        {
-            return false;
-            //_context.Translators.Add(translator);
-            //return _context.SaveChanges() > 0;
-        }
+        public async Task<bool> AddTranslator(TranslatorDto translator) => await mediator.Send(new CreateTranslator { Translator = translator });
 
         [HttpPost]
-        public string UpdateTranslatorStatus(int Translator, string newStatus = "")
+        public string UpdateTranslatorStatus(int translatorId, string newStatus = "")
         {
-            _logger.LogInformation("User status update request: " + newStatus + " for user " + Translator.ToString());
+            _logger.LogInformation("User status update request: " + newStatus + " for user " + translatorId.ToString());
             if (!TranslatorStatuses.Where(status => status == newStatus).Any())
             {
                 throw new ArgumentException("unknown status");
