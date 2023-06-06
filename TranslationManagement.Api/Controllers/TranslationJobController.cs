@@ -1,12 +1,15 @@
 ﻿using Application.Contracts;
+using Application.CQRS.Queries;
 using Application.Models;
 using AutoMapper;
 using External.ThirdParty.Services;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using TranslationManagement.Api.Controlers;
@@ -24,12 +27,14 @@ namespace TranslationManagement.Api.Controllers
             internal static readonly string Completed = "Completed";
         }
 
+        private readonly IMediator mediator;
         private readonly IMapper mapper;
         private readonly ITranslationJobRepository _repository;
         private readonly ILogger<TranslatorManagementController> _logger;
 
-        public TranslationJobController(IMapper mapper, ITranslationJobRepository repository, ILogger<TranslatorManagementController> logger)
+        public TranslationJobController(IMediator mediator, IMapper mapper, ITranslationJobRepository repository, ILogger<TranslatorManagementController> logger)
         {
+            this.mediator = mediator;
             this.mapper = mapper;
             this._repository = repository;
             _logger = logger;
@@ -38,9 +43,8 @@ namespace TranslationManagement.Api.Controllers
         [HttpGet]
         public async Task<TranslationJobDto[]> GetJobs()
         {
-            var s = await this._repository.GetAll();
-
-            return mapper.Map<TranslationJobDto[]>(s);
+            var jobs = await mediator.Send(new GetAllTranslationJobs());
+            return jobs.ToArray();
         }
 
         const double PricePerCharacter = 0.01;
