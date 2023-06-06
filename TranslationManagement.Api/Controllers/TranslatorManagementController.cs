@@ -1,4 +1,5 @@
-﻿using Application.CQRS.Commands;
+﻿using Application.Contracts;
+using Application.CQRS.Commands;
 using Application.CQRS.Queries;
 using Application.Models;
 using MediatR;
@@ -14,7 +15,6 @@ namespace TranslationManagement.Api.Controlers
     [Route("api/TranslatorsManagement/[action]")]
     public class TranslatorManagementController : ControllerBase
     {
-        public static readonly string[] TranslatorStatuses = { "Applicant", "Certified", "Deleted" };
         private readonly IMediator mediator;
         private readonly ILogger<TranslatorManagementController> _logger;
 
@@ -43,13 +43,9 @@ namespace TranslationManagement.Api.Controlers
         public async Task<bool> AddTranslator(TranslatorDto translator) => await mediator.Send(new CreateTranslator { Translator = translator });
 
         [HttpPost]
-        public string UpdateTranslatorStatus(int translatorId, string newStatus = "")
+        public string UpdateTranslatorStatus(int translatorId, TranslatorStatus newStatus)
         {
             _logger.LogInformation("User status update request: " + newStatus + " for user " + translatorId.ToString());
-            if (!TranslatorStatuses.Where(status => status == newStatus).Any())
-            {
-                throw new ArgumentException("unknown status");
-            }
 
             //var job = _context.Translators.Single(j => j.Id == Translator);
             //job.Status = newStatus;

@@ -20,13 +20,6 @@ namespace TranslationManagement.Api.Controllers
     [Route("api/jobs/[action]")]
     public class TranslationJobController : ControllerBase
     {
-        static class JobStatuses
-        {
-            internal static readonly string New = "New";
-            internal static readonly string Inprogress = "InProgress";
-            internal static readonly string Completed = "Completed";
-        }
-
         private readonly IMediator mediator;
         private readonly IMapper mapper;
         private readonly ITranslationJobRepository _repository;
@@ -56,7 +49,7 @@ namespace TranslationManagement.Api.Controllers
         [HttpPost]
         public bool CreateJob(TranslationJobDto job)
         {
-            job.Status = "New";
+            job.Status = JobStatus.New;
             SetPrice(job);
             //_context.TranslationJobs.Add(job);
             bool success = false;
@@ -107,7 +100,7 @@ namespace TranslationManagement.Api.Controllers
         }
 
         [HttpPost]
-        public string UpdateJobStatus(int jobId, int translatorId, string newStatus = "")
+        public string UpdateJobStatus(int jobId, int translatorId, JobStatus newStatus)
         {
             //_logger.LogInformation("Job status update request received: " + newStatus + " for job " + jobId.ToString() + " by translator " + translatorId);
             //if (!typeof(JobStatuses).GetProperties().Any(prop => prop.Name == newStatus))
