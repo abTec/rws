@@ -1,4 +1,7 @@
-﻿namespace Application.Models
+﻿using AutoMapper;
+using Domain.Models;
+
+namespace Application.Models
 {
     public class TranslationJobDto
     {
@@ -8,5 +11,14 @@
         public string OriginalContent { get; set; }
         public string TranslatedContent { get; set; }
         public double Price { get; set; }
+    }
+
+    public class TranslationJobProfile : Profile
+    {
+        public TranslationJobProfile()
+        {
+            CreateMap<TranslationJobDto, TranslationJob>()
+                 .ReverseMap();
+        }
     }
 }

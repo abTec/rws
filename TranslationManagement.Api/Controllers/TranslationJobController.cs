@@ -1,11 +1,13 @@
 ﻿using Application.Contracts;
 using Application.Models;
+using AutoMapper;
 using External.ThirdParty.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using TranslationManagement.Api.Controlers;
 
@@ -22,21 +24,23 @@ namespace TranslationManagement.Api.Controllers
             internal static readonly string Completed = "Completed";
         }
 
+        private readonly IMapper mapper;
         private readonly ITranslationJobRepository _repository;
         private readonly ILogger<TranslatorManagementController> _logger;
 
-        public TranslationJobController(ITranslationJobRepository repository, ILogger<TranslatorManagementController> logger)
+        public TranslationJobController(IMapper mapper, ITranslationJobRepository repository, ILogger<TranslatorManagementController> logger)
         {
+            this.mapper = mapper;
             this._repository = repository;
             _logger = logger;
         }
 
         [HttpGet]
-        public TranslationJobDto[] GetJobs()
+        public async Task<TranslationJobDto[]> GetJobs()
         {
-            var s = this._repository.GetAll();
+            var s = await this._repository.GetAll();
 
-            return null;
+            return mapper.Map<TranslationJobDto[]>(s);
         }
 
         const double PricePerCharacter = 0.01;

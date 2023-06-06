@@ -1,12 +1,13 @@
+using Application.Contracts;
+using AutoMapper;
+using DataAccess;
+using DataAccess.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using Microsoft.EntityFrameworkCore;
-using DataAccess;
-using Application.Contracts;
-using DataAccess.Repositories;
 
 namespace TranslationManagement.Api
 {
@@ -21,14 +22,20 @@ namespace TranslationManagement.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ITranslationJobRepository, TranslationJobRepository>();
+            RegisterServices(services);
+
+
+
+            IMapper mapper = AutoMapperConfiguration.ConfigureMapping().CreateMapper();
+            services.AddSingleton(mapper);
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TranslationManagement.Api", Version = "v1" });
             });
 
-            services.AddDbContext<AppDbContext>(options => 
+            services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlite("Data Source=TranslationAppDatabase.db"));
         }
 
@@ -43,6 +50,12 @@ namespace TranslationManagement.Api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void RegisterServices(IServiceCollection services)
+        {
+            services.AddScoped<ITranslationJobRepository, TranslationJobRepository>();
+            services.AddScoped<ITranslatorRepository, TranslatorRepository>();
         }
     }
 }
