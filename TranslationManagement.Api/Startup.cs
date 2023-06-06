@@ -25,13 +25,18 @@ namespace TranslationManagement.Api
         {
             RegisterServices(services);
 
-            IMapper mapper = AutoMapperConfiguration.ConfigureMapping().CreateMapper();
-            services.AddSingleton(mapper);
+            services.AddControllers()
+                .AddNewtonsoftJson();
 
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(opt =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TranslationManagement.Api", Version = "v1" });
+                opt.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "TranslationManagement.Api",
+                    Version = "v1.1",
+                    Description = "An ASP.NET Core Web API for managing Translation altered for RWS interview process purposes. For more info write to <a href=\"mailto:hello@abtec.cz\">hello@abtec.cz</a>"
+                });
+                opt.SchemaFilter<EnumSchemaFilter>();
             });
 
             services.AddDbContext<AppDbContext>(options =>
@@ -56,6 +61,8 @@ namespace TranslationManagement.Api
             services.AddScoped<ITranslationJobRepository, TranslationJobRepository>();
             services.AddScoped<ITranslatorRepository, TranslatorRepository>();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateTranslationJobHandler>());
+            IMapper mapper = AutoMapperConfiguration.ConfigureMapping().CreateMapper();
+            services.AddSingleton(mapper);
         }
     }
 }
