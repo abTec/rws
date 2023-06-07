@@ -6,7 +6,7 @@ namespace Application.Contracts
 {
     public interface ITranslatorRepository : IRepository<Translator>
     {
-        Task<Translator> UpdateJob(int translatorId, string newStatus = "");
+        Task<bool> UpdateStatus(int translatorId, string newStatus = "");
         Task<ICollection<Translator>> GetByName(string name);
     }
 }

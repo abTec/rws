@@ -85,25 +85,23 @@ namespace TranslationManagement.Api.Controllers
         }
 
         [HttpPost]
-        public string UpdateJobStatus(int jobId, int translatorId, JobStatus newStatus)
+        public async Task<string> UpdateJobStatus(int jobId, int translatorId, JobStatus newStatus)
         {
-            //_logger.LogInformation("Job status update request received: " + newStatus + " for job " + jobId.ToString() + " by translator " + translatorId);
-            //if (!typeof(JobStatuses).GetProperties().Any(prop => prop.Name == newStatus))
-            //{
-            //    return "invalid status";
-            //}
+            _logger.LogInformation("Job status update request received: " + newStatus + " for job " + jobId.ToString() + " by translator " + translatorId);
 
-            //var job = _context.TranslationJobs.Single(j => j.Id == jobId);
+            var result = await _mediator.Send(new UpdateTranslationJob
+            {
+                TranslationJobId = jobId,
+                TranslatorId = translatorId,
+                NewStatus = newStatus
+            });
 
-            //bool isInvalidStatusChange = (job.Status == JobStatuses.New && newStatus == JobStatuses.Completed) ||
-            //                             job.Status == JobStatuses.Completed || newStatus == JobStatuses.New;
-            //if (isInvalidStatusChange)
-            //{
-            //    return "invalid status change";
-            //}
+            if (!result)
+            {
+                return "invalid status change";
+            }
 
-            //job.Status = newStatus;
-            //_context.SaveChanges();
+            // @abe I dont like returning string here, but imma leave it at it is
             return "updated";
         }
     }
