@@ -3,6 +3,7 @@ using Application.CQRS.CommandHandlers;
 using AutoMapper;
 using DataAccess;
 using DataAccess.Repositories;
+using External.ThirdParty.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -60,6 +61,7 @@ namespace TranslationManagement.Api
         {
             services.AddScoped<ITranslationJobRepository, TranslationJobRepository>();
             services.AddScoped<ITranslatorRepository, TranslatorRepository>();
+            services.AddScoped<INotificationService, UnreliableNotificationService>();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateTranslationJobHandler>());
             IMapper mapper = AutoMapperConfiguration.ConfigureMapping().CreateMapper();
             services.AddSingleton(mapper);

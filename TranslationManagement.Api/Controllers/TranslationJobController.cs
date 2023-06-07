@@ -20,23 +20,23 @@ namespace TranslationManagement.Api.Controllers
     [Route("api/jobs/[action]")]
     public class TranslationJobController : ControllerBase
     {
-        private readonly IMediator mediator;
-        private readonly IMapper mapper;
-        private readonly ITranslationJobRepository _repository;
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
+        private readonly INotificationService _notificationService;
         private readonly ILogger<TranslatorManagementController> _logger;
 
-        public TranslationJobController(IMediator mediator, IMapper mapper, ITranslationJobRepository repository, ILogger<TranslatorManagementController> logger)
+        public TranslationJobController(IMediator mediator, IMapper mapper, INotificationService notificationService, ILogger<TranslatorManagementController> logger)
         {
-            this.mediator = mediator;
-            this.mapper = mapper;
-            this._repository = repository;
+            _mediator = mediator;
+            _mapper = mapper;
+            _notificationService = notificationService;
             _logger = logger;
         }
 
         [HttpGet]
         public async Task<TranslationJobDto[]> GetJobs()
         {
-            var jobs = await mediator.Send(new GetAllTranslationJobs());
+            var jobs = await _mediator.Send(new GetAllTranslationJobs());
             return jobs.ToArray();
         }
 
@@ -47,7 +47,7 @@ namespace TranslationManagement.Api.Controllers
         }
 
         [HttpPost]
-        public bool CreateJob(TranslationJobDto job)
+        public async Task<bool> CreateJob(TranslationJobDto job)
         {
             job.Status = JobStatus.New;
             SetPrice(job);
@@ -55,9 +55,16 @@ namespace TranslationManagement.Api.Controllers
             bool success = false;
             if (success)
             {
-                var notificationSvc = new UnreliableNotificationService();
-                while (!notificationSvc.SendNotification("Job created: " + job.Id).Result)
+                try
                 {
+                    while (!await _notificationService.SendNotification("Job created: " + job.Id))
+                    {
+                    }
+                }
+                catch (Exception)
+                {
+
+                    _logger.LogInformation($"OOPs implementation of {nameof(INotificationService)} is unreliable");
                 }
 
                 _logger.LogInformation("New job notification sent");
@@ -69,6 +76,7 @@ namespace TranslationManagement.Api.Controllers
         [HttpPost]
         public bool CreateJobWithFile(IFormFile file, string customer)
         {
+            // todo IFileProcessoreaa
             var reader = new StreamReader(file.OpenReadStream());
             string content;
 
