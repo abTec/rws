@@ -33,7 +33,7 @@ namespace Application.CQRS.CommandHandlers
                 Price = _priceCalculator.CalculatePrice(request.Model.OriginalContent.Length),
             };
 
-            return await _repository.Create(job);
+            return await _repository.CreateAsync(job);
         }
     }
 }

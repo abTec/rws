@@ -20,6 +20,6 @@ namespace Application.CQRS.CommandHandlers
             this.repository = repository;
         }
 
-        public async Task<bool> Handle(CreateTranslator request, CancellationToken cancellationToken) => await repository.Create(mapper.Map<Translator>(request.Translator));
+        public async Task<bool> Handle(CreateTranslator request, CancellationToken cancellationToken) => await repository.CreateAsync(mapper.Map<Translator>(request.Translator));
     }
 }

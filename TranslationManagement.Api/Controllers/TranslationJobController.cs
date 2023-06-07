@@ -38,6 +38,12 @@ namespace TranslationManagement.Api.Controllers
             return jobs.ToArray();
         }
 
+        [HttpGet]
+        public async Task<TranslationJobDto[]> GetJobsForTranslator(int translatorId) => (await _mediator.Send(new GetJobsForTranslator { TranslatorId = translatorId })).ToArray();
+
+        [HttpPost]
+        public async Task<bool> AssignJob(int jobId, int translatorId) => await _mediator.Send(new AssignJob { JobId = jobId, TranslatorId = translatorId });
+
         [HttpPost]
         public async Task<bool> CreateJob(TranslationJobDto job)
         {

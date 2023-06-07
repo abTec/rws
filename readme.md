@@ -11,10 +11,10 @@ We do expect this app to grow in the future and your design choices should refle
 Your tasks are following (ordered by importance): 
 
 - **Refactor the code so it is of production quality**
-> * DO try to outline what you would consider a good architecture
-> * DO consider adding folders, projects, interfaces, design patterns, whatever you see fit
-> * we'd love to see code that is easy to read, extend and maintain
-> * maybe next feature request will be to support creating jobs by more file types or assigning jobs via messaging
+> * DO try to outline what you would consider a good architecture :heavy_check_mark:
+> * DO consider adding folders, projects, interfaces, design patterns, whatever you see fit :heavy_check_mark:
+> * we'd love to see code that is easy to read, extend and maintain :heavy_check_mark:
+> * maybe next feature request will be to support creating jobs by more file types or assigning jobs via messaging :heavy_check_mark:
 
 - **RESTful api design** 
 
@@ -24,7 +24,7 @@ Your tasks are following (ordered by importance):
 
 - **Implement additional features [optional, for additional points]**
 > - business rule: "only Certified translators can work on jobs"
-> - implement endpoints that will allow to track (set and get) which translator works on what job
+> - implement endpoints that will allow to track (set and get) which translator works on what job :heavy_check_mark:
 
 # Requirements - front end (if that is also your domain)
 Create a super simple frontend. We would like to see a few components, a bit of data manipulation and a small state management. 
