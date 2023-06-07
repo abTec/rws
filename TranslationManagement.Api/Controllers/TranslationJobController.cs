@@ -1,17 +1,15 @@
 ﻿using Application.Contracts;
+using Application.CQRS.Commands;
 using Application.CQRS.Queries;
 using Application.Models;
-using AutoMapper;
 using External.ThirdParty.Services;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using TranslationManagement.Api.Controlers;
 
 namespace TranslationManagement.Api.Controllers
@@ -20,44 +18,44 @@ namespace TranslationManagement.Api.Controllers
     [Route("api/jobs/[action]")]
     public class TranslationJobController : ControllerBase
     {
-        private readonly IMediator mediator;
-        private readonly IMapper mapper;
-        private readonly ITranslationJobRepository _repository;
+        private readonly IMediator _mediator;
+        private readonly INotificationService _notificationService;
+        private readonly IFileProcessor _fileProcessor;
         private readonly ILogger<TranslatorManagementController> _logger;
 
-        public TranslationJobController(IMediator mediator, IMapper mapper, ITranslationJobRepository repository, ILogger<TranslatorManagementController> logger)
+        public TranslationJobController(IMediator mediator, INotificationService notificationService, IFileProcessor fileProcessor, ILogger<TranslatorManagementController> logger)
         {
-            this.mediator = mediator;
-            this.mapper = mapper;
-            this._repository = repository;
+            _mediator = mediator;
+            _notificationService = notificationService;
+            _fileProcessor = fileProcessor;
             _logger = logger;
         }
 
         [HttpGet]
         public async Task<TranslationJobDto[]> GetJobs()
         {
-            var jobs = await mediator.Send(new GetAllTranslationJobs());
+            var jobs = await _mediator.Send(new GetAllTranslationJobs());
             return jobs.ToArray();
         }
 
-        const double PricePerCharacter = 0.01;
-        private void SetPrice(TranslationJobDto job)
-        {
-            job.Price = job.OriginalContent.Length * PricePerCharacter;
-        }
-
         [HttpPost]
-        public bool CreateJob(TranslationJobDto job)
+        public async Task<bool> CreateJob(TranslationJobDto job)
         {
-            job.Status = JobStatus.New;
-            SetPrice(job);
-            //_context.TranslationJobs.Add(job);
+            var result = await _mediator.Send(new CreateTranslationJob { Model = job });
+
             bool success = false;
             if (success)
             {
-                var notificationSvc = new UnreliableNotificationService();
-                while (!notificationSvc.SendNotification("Job created: " + job.Id).Result)
+                try
                 {
+                    while (!await _notificationService.SendNotification("Job created: " + job.Id))
+                    {
+                    }
+                }
+                catch (Exception)
+                {
+
+                    _logger.LogInformation($"OOPS implementation of {nameof(INotificationService)} is unreliable");
                 }
 
                 _logger.LogInformation("New job notification sent");
@@ -67,36 +65,17 @@ namespace TranslationManagement.Api.Controllers
         }
 
         [HttpPost]
-        public bool CreateJobWithFile(IFormFile file, string customer)
+        public async Task<bool> CreateJobWithFile(IFormFile file, string customer)
         {
-            var reader = new StreamReader(file.OpenReadStream());
-            string content;
-
-            if (file.FileName.EndsWith(".txt"))
-            {
-                content = reader.ReadToEnd();
-            }
-            else if (file.FileName.EndsWith(".xml"))
-            {
-                var xdoc = XDocument.Parse(reader.ReadToEnd());
-                content = xdoc.Root.Element("Content").Value;
-                customer = xdoc.Root.Element("Customer").Value.Trim();
-            }
-            else
-            {
-                throw new NotSupportedException("unsupported file");
-            }
-
-            var newJob = new TranslationJobDto()
+            var (content, customerName) = await _fileProcessor.ProcessFileAsync(file, customer);
+            var newJob = new TranslationJobDto
             {
                 OriginalContent = content,
-                TranslatedContent = "",
-                CustomerName = customer,
+                TranslatedContent = string.Empty,
+                CustomerName = customerName,
             };
 
-            SetPrice(newJob);
-
-            return CreateJob(newJob);
+            return await CreateJob(newJob);
         }
 
         [HttpPost]

@@ -14,12 +14,6 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
-        public override Task<bool> Create(TranslationJob entity)
-        {
-            entity.Status = "New";
-            return base.Create(entity);
-        }
-
         public Task<TranslationJob> UpdateJob(int jobId, int translatorId, string newStatus = "")
         {
             throw new NotImplementedException();
