@@ -8,8 +8,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8547FBF7-7179-421B-80BD-2E293D0807A6}"
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
+		..\..\..\OneDrive\Desktop\client.png = ..\..\..\OneDrive\Desktop\client.png
 		TranslationManagement.Api\Dockerfile = TranslationManagement.Api\Dockerfile
 		readme.md = readme.md
+		..\..\..\OneDrive\Desktop\solution.png = ..\..\..\OneDrive\Desktop\solution.png
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "External.ThirdParty.Services", "External.ThirdParty.Services\External.ThirdParty.Services.csproj", "{173F3433-4139-404D-A843-BAF43F6164FA}"
@@ -40,7 +42,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{2EFF3ED8-8266-4BD2-B885-B5A2AAB88C04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.Tests", "TranslationManagement.Tests\TranslationManagement.Tests.csproj", "{54DF3350-38D0-4889-A9DA-5FE897656FC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranslationManagement.Tests", "TranslationManagement.Tests\TranslationManagement.Tests.csproj", "{54DF3350-38D0-4889-A9DA-5FE897656FC1}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "translationmanagement.client", "TranslationManagement.Client\translationmanagement.client.esproj", "{A59F1021-C8F8-4583-BFD3-D807B0F78F2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +80,12 @@ Global
 		{54DF3350-38D0-4889-A9DA-5FE897656FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54DF3350-38D0-4889-A9DA-5FE897656FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54DF3350-38D0-4889-A9DA-5FE897656FC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A59F1021-C8F8-4583-BFD3-D807B0F78F2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A59F1021-C8F8-4583-BFD3-D807B0F78F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A59F1021-C8F8-4583-BFD3-D807B0F78F2B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A59F1021-C8F8-4583-BFD3-D807B0F78F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A59F1021-C8F8-4583-BFD3-D807B0F78F2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A59F1021-C8F8-4583-BFD3-D807B0F78F2B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +100,7 @@ Global
 		{AD9A1C6C-1E95-4328-90C4-EB4002A7ED64} = {8440F3C5-0B6C-4101-B020-799CB7BC72CC}
 		{2EFF3ED8-8266-4BD2-B885-B5A2AAB88C04} = {B50B6504-FBED-4580-88C6-ABA26FD5BBC3}
 		{54DF3350-38D0-4889-A9DA-5FE897656FC1} = {BEA4BD54-6871-40D4-9CB3-9D02874DB402}
+		{A59F1021-C8F8-4583-BFD3-D807B0F78F2B} = {B1C278F4-9B6D-45F5-8544-C07BA229962B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {821E39E6-0BB8-498C-9510-D913968AA6FF}

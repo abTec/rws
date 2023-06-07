@@ -1,3 +1,59 @@
+# My Descritpion
+Within this interview homework I was working on two main task:
+- Refactor Backend Part
+- Create Frontend Client
+
+Please note that lot of stuff within this project is really overkilled. I just did it for interview purposes to show "that I know" :)
+
+Don't hesitate to contact me with any questions at <a href="mailto:hello@abtec.cz">hello@abtec.cz</a>!
+
+
+So lemme tell you something about each part!
+
+# #1 Backend
+You can study my Pull Requests history to understand how I was working. My goal was prepared Clean Architecture Solution with CQRS approach.
+
+![React Client](solution.png)
+
+So what have I done??
+- Implemention od Repository pattern.
+  > In original solution Controllers were using directly DbContext. I was trying to prepare some Clean Architecture and separete responsibilities. So we can see lot of DI within this PR. I've also created abstract Repository to do not break DRY principle.
+- AutoMapper
+  > Because I decoupled Data Acces Layer from the client I decided to create DTO classes for the rest of the solution. So AutoMapper was the right choice!
+- MediatR
+  > After implementation of Repository Pattern the next step for me was to get rid of CRUD and prepare our application for future! RabbitMQ where are you?? So you can see request and request handler for each command and query in our app!
+- Refactoring
+  > There were lot of ugly stuff in the code. So I did some cleanup. DI for UnreliableNotificationService, Static string were replaced with enums (Also works for Swagger :)). new IPriceCalculator was created
+- IFileProcessor
+  > I've created IFileProcessor and FileProcessor to allow us used different filetypes.
+- BONUS: Assign Jobs to Translators
+  > Methods for assing jobs to translators and retrieving job list were added. Of course in CQRS manner. It was necessary to alter database so within this task I have shown that I can use EF migrations also :)
+- Unit Tests
+  > I wrote just few tests powered my Moq and Shouldly to show you how I am writting tests.
+# #2 Client
+I prepared simple SPA without routing, no next.js nothing. Just pure CRA experience.
+
+Used libraries: materialui, react-toastify
+
+![React Client](Client.png)
+
+**Brief description:** App is separeted to logical components like TranslatorList or TranslatorItem. App is 
+using Hooks features. For example button is disabled during fetching data from API. This tiny client can call
+our backend API and retrieve the list of all translators in our database. The result list is shown to user.
+
+### How to run
+
+Please run startup API project under Docker. Unfortunately I had no time to include react client in docker, so you need to run React app with right click on project -> Debug -> Start New Instance 
+
+# Final Words
+------------
+What could I have done better? There are still gadzillion of things how to improve this solution e.g.: UnitOfWork, AOP principles to Logging and stuff, better logger (Serilog is cool). Better separation for configuration of IoC container etc.
+But this homework should be few hours job so I just stopped :D I'm going for a beer now
+
+ORIGINAL MD FOLLOWS
+
+------------
+
 # Project description
 This app should help us manage translators and jobs they work on. 
 It is currently a working proof of concept but it needs a bit of polishing and a couple of features. 
