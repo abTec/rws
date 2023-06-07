@@ -6,8 +6,9 @@ namespace Application.Contracts
 {
     public interface IRepository<TEntity> where TEntity : class, IEntity
     {
-        Task<bool> Create(TEntity entity);
-        Task Delete(int id);
-        Task<ICollection<TEntity>> GetAll();
+        Task<bool> CreateAsync(TEntity entity);
+        Task<TEntity> GetByIdAsync(int id);
+        Task DeleteAsync(int id);
+        Task<ICollection<TEntity>> GetAllAsync();
     }
 }

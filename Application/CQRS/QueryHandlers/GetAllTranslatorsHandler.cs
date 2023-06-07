@@ -20,6 +20,6 @@ namespace Application.CQRS.QueryHandlers
             this.repository = repository;
         }
 
-        public async Task<ICollection<TranslatorDto>> Handle(GetAllTranslators request, CancellationToken cancellationToken) => mapper.Map<TranslatorDto[]>(await repository.GetAll());
+        public async Task<ICollection<TranslatorDto>> Handle(GetAllTranslators request, CancellationToken cancellationToken) => mapper.Map<TranslatorDto[]>(await repository.GetAllAsync());
     }
 }

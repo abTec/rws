@@ -1,4 +1,6 @@
-﻿namespace Domain.Models
+﻿using System.Collections.Generic;
+
+namespace Domain.Models
 {
     public class Translator : IEntity
     {
@@ -7,5 +9,6 @@
         public string HourlyRate { get; set; }
         public string Status { get; set; }
         public string CreditCardNumber { get; set; }
+        public ICollection<TranslationJob> Jobs { get; set; } = new List<TranslationJob>();
     }
 }
