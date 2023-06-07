@@ -1,17 +1,15 @@
 ﻿using Application.Contracts;
+using Application.CQRS.Commands;
 using Application.CQRS.Queries;
 using Application.Models;
-using AutoMapper;
 using External.ThirdParty.Services;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using TranslationManagement.Api.Controlers;
 
 namespace TranslationManagement.Api.Controllers
@@ -21,15 +19,15 @@ namespace TranslationManagement.Api.Controllers
     public class TranslationJobController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
+        private readonly IFileProcessor _fileProcessor;
         private readonly ILogger<TranslatorManagementController> _logger;
 
-        public TranslationJobController(IMediator mediator, IMapper mapper, INotificationService notificationService, ILogger<TranslatorManagementController> logger)
+        public TranslationJobController(IMediator mediator, INotificationService notificationService, IFileProcessor fileProcessor, ILogger<TranslatorManagementController> logger)
         {
             _mediator = mediator;
-            _mapper = mapper;
             _notificationService = notificationService;
+            _fileProcessor = fileProcessor;
             _logger = logger;
         }
 
@@ -40,18 +38,11 @@ namespace TranslationManagement.Api.Controllers
             return jobs.ToArray();
         }
 
-        const double PricePerCharacter = 0.01;
-        private void SetPrice(TranslationJobDto job)
-        {
-            job.Price = job.OriginalContent.Length * PricePerCharacter;
-        }
-
         [HttpPost]
         public async Task<bool> CreateJob(TranslationJobDto job)
         {
-            job.Status = JobStatus.New;
-            SetPrice(job);
-            //_context.TranslationJobs.Add(job);
+            var result = await _mediator.Send(new CreateTranslationJob { Model = job });
+
             bool success = false;
             if (success)
             {
@@ -64,7 +55,7 @@ namespace TranslationManagement.Api.Controllers
                 catch (Exception)
                 {
 
-                    _logger.LogInformation($"OOPs implementation of {nameof(INotificationService)} is unreliable");
+                    _logger.LogInformation($"OOPS implementation of {nameof(INotificationService)} is unreliable");
                 }
 
                 _logger.LogInformation("New job notification sent");
@@ -74,37 +65,17 @@ namespace TranslationManagement.Api.Controllers
         }
 
         [HttpPost]
-        public bool CreateJobWithFile(IFormFile file, string customer)
+        public async Task<bool> CreateJobWithFile(IFormFile file, string customer)
         {
-            // todo IFileProcessoreaa
-            var reader = new StreamReader(file.OpenReadStream());
-            string content;
-
-            if (file.FileName.EndsWith(".txt"))
-            {
-                content = reader.ReadToEnd();
-            }
-            else if (file.FileName.EndsWith(".xml"))
-            {
-                var xdoc = XDocument.Parse(reader.ReadToEnd());
-                content = xdoc.Root.Element("Content").Value;
-                customer = xdoc.Root.Element("Customer").Value.Trim();
-            }
-            else
-            {
-                throw new NotSupportedException("unsupported file");
-            }
-
-            var newJob = new TranslationJobDto()
+            var (content, customerName) = await _fileProcessor.ProcessFileAsync(file, customer);
+            var newJob = new TranslationJobDto
             {
                 OriginalContent = content,
-                TranslatedContent = "",
-                CustomerName = customer,
+                TranslatedContent = string.Empty,
+                CustomerName = customerName,
             };
 
-            SetPrice(newJob);
-
-            return CreateJob(newJob);
+            return await CreateJob(newJob);
         }
 
         [HttpPost]

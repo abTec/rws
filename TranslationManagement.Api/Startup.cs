@@ -1,6 +1,7 @@
 using Application.Contracts;
 using Application.CQRS.CommandHandlers;
 using AutoMapper;
+using Common;
 using DataAccess;
 using DataAccess.Repositories;
 using External.ThirdParty.Services;
@@ -62,6 +63,8 @@ namespace TranslationManagement.Api
             services.AddScoped<ITranslationJobRepository, TranslationJobRepository>();
             services.AddScoped<ITranslatorRepository, TranslatorRepository>();
             services.AddScoped<INotificationService, UnreliableNotificationService>();
+            services.AddSingleton<IFileProcessor, FileProcessor>();
+            services.AddSingleton<IPriceCalculator, PriceCalculator>();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CreateTranslationJobHandler>());
             IMapper mapper = AutoMapperConfiguration.ConfigureMapping().CreateMapper();
             services.AddSingleton(mapper);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.CQRS.CommandHandlers
 {
-    internal class UpdateTranslationJobHandler : IRequestHandler<CreateTranslationJob, TranslationJobDto>
+    internal class UpdateTranslationJobHandler : IRequestHandler<CreateTranslationJob, bool>
     {
         private readonly IMapper mapper;
         private readonly ITranslationJobRepository repository;
@@ -20,7 +20,7 @@ namespace Application.CQRS.CommandHandlers
             this.repository = repository;
         }
 
-        public Task<TranslationJobDto> Handle(CreateTranslationJob request, CancellationToken cancellationToken)
+        public Task<bool> Handle(CreateTranslationJob request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

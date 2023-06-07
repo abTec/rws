@@ -9,25 +9,31 @@ using System.Threading.Tasks;
 
 namespace Application.CQRS.CommandHandlers
 {
-    public class CreateTranslationJobHandler : IRequestHandler<CreateTranslationJob, TranslationJobDto>
+    public class CreateTranslationJobHandler : IRequestHandler<CreateTranslationJob, bool>
     {
         private readonly IMapper _mapper;
         private readonly ITranslationJobRepository _repository;
+        private readonly IPriceCalculator _priceCalculator;
 
-        public CreateTranslationJobHandler(IMapper mapper, ITranslationJobRepository repository)
+        public CreateTranslationJobHandler(IMapper mapper, ITranslationJobRepository repository, IPriceCalculator priceCalculator)
         {
             _mapper = mapper;
             _repository = repository;
+            _priceCalculator = priceCalculator;
         }
 
-        public async Task<TranslationJobDto> Handle(CreateTranslationJob request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(CreateTranslationJob request, CancellationToken cancellationToken)
         {
             var job = new TranslationJob
             {
-
+                CustomerName = request.Model.CustomerName,
+                OriginalContent = request.Model.OriginalContent,
+                TranslatedContent = request.Model.TranslatedContent,
+                Status = JobStatus.New.ToString(),
+                Price = _priceCalculator.CalculatePrice(request.Model.OriginalContent.Length),
             };
 
-            return _mapper.Map<TranslationJobDto>(await _repository.Create(job));
+            return await _repository.Create(job);
         }
     }
 }
