@@ -38,7 +38,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{AD9A1C6C-1E95-4328-90C4-EB4002A7ED64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{2EFF3ED8-8266-4BD2-B885-B5A2AAB88C04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{2EFF3ED8-8266-4BD2-B885-B5A2AAB88C04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslationManagement.Tests", "TranslationManagement.Tests\TranslationManagement.Tests.csproj", "{54DF3350-38D0-4889-A9DA-5FE897656FC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +72,10 @@ Global
 		{2EFF3ED8-8266-4BD2-B885-B5A2AAB88C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EFF3ED8-8266-4BD2-B885-B5A2AAB88C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EFF3ED8-8266-4BD2-B885-B5A2AAB88C04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54DF3350-38D0-4889-A9DA-5FE897656FC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54DF3350-38D0-4889-A9DA-5FE897656FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54DF3350-38D0-4889-A9DA-5FE897656FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54DF3350-38D0-4889-A9DA-5FE897656FC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +89,7 @@ Global
 		{C39BD852-806F-409C-8CBC-0F632E6F882D} = {8805327F-6892-4B13-A5C8-B1B7D04F9775}
 		{AD9A1C6C-1E95-4328-90C4-EB4002A7ED64} = {8440F3C5-0B6C-4101-B020-799CB7BC72CC}
 		{2EFF3ED8-8266-4BD2-B885-B5A2AAB88C04} = {B50B6504-FBED-4580-88C6-ABA26FD5BBC3}
+		{54DF3350-38D0-4889-A9DA-5FE897656FC1} = {BEA4BD54-6871-40D4-9CB3-9D02874DB402}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {821E39E6-0BB8-498C-9510-D913968AA6FF}
