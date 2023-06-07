@@ -1,7 +1,5 @@
 ﻿using Application.Contracts;
 using Application.CQRS.Commands;
-using Application.Models;
-using AutoMapper;
 using Domain.Models;
 using MediatR;
 using System.Threading;
@@ -11,13 +9,11 @@ namespace Application.CQRS.CommandHandlers
 {
     public class CreateTranslationJobHandler : IRequestHandler<CreateTranslationJob, bool>
     {
-        private readonly IMapper _mapper;
         private readonly ITranslationJobRepository _repository;
         private readonly IPriceCalculator _priceCalculator;
 
-        public CreateTranslationJobHandler(IMapper mapper, ITranslationJobRepository repository, IPriceCalculator priceCalculator)
+        public CreateTranslationJobHandler(ITranslationJobRepository repository, IPriceCalculator priceCalculator)
         {
-            _mapper = mapper;
             _repository = repository;
             _priceCalculator = priceCalculator;
         }

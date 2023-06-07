@@ -1,12 +1,12 @@
-﻿using Application.Models;
+﻿using Application.Contracts;
 using MediatR;
 
 namespace Application.CQRS.Commands
 {
-    public class UpdateTranslationJob : IRequest<TranslationJobDto>
+    public class UpdateTranslationJob : IRequest<bool>
     {
         public int TranslationJobId { get; set; }
-        public int TranslatorID { get; set; }
-        public string NewStatus { get; set; }
+        public int TranslatorId { get; set; }
+        public JobStatus NewStatus { get; set; }
     }
 }

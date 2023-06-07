@@ -43,15 +43,18 @@ namespace TranslationManagement.Api.Controlers
         public async Task<bool> AddTranslator(TranslatorDto translator) => await mediator.Send(new CreateTranslator { Translator = translator });
 
         [HttpPost]
-        public string UpdateTranslatorStatus(int translatorId, TranslatorStatus newStatus)
+        public async Task<string> UpdateTranslatorStatus(int translatorId, TranslatorStatus newStatus)
         {
             _logger.LogInformation("User status update request: " + newStatus + " for user " + translatorId.ToString());
 
-            //var job = _context.Translators.Single(j => j.Id == Translator);
-            //job.Status = newStatus;
-            //_context.SaveChanges();
+            var result = await mediator.Send(new UpdateTranslator
+            {
+                TranslatorId = translatorId,
+                NewStatus = newStatus,
+            });
 
-            return "updated";
+            // @abe I dont like returning string here, but imma leave it at it is
+            return result ? "updated" : "error";
         }
     }
 }
