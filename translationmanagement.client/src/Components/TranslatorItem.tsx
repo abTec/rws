@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material'
 import Translator from '../Translator'
 
 export interface TranslatorProps {

@@ -7,7 +7,7 @@ import Translator from './Translator';
 import TranslatorList from './Components/TranslatorList';
 
 function App() {
-  
+
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [data, setData] = useState<Translator[]>([])
 
@@ -25,7 +25,7 @@ function App() {
       if (!response.ok) {
         throw new Error(`Oops! status: ${response.status}`);
       }
-  
+
       const result = await response.json();
 
       setData(result)
@@ -59,15 +59,15 @@ function App() {
 
 
   return (
-        <Container maxWidth="sm" className='App'>
-          <Typography variant="h1" gutterBottom>RWS Client</Typography>
-          <Button
-                  disabled={isLoading}
-                  onClick={handleClick}
-                  variant="outlined">Get Translators</Button>
-          <TranslatorList translators={data} />
-          <ToastContainer />
-        </Container>
+    <Container maxWidth="sm" className='App'>
+      <Typography variant="h1" gutterBottom>RWS Client</Typography>
+      <Button
+        disabled={isLoading}
+        onClick={handleClick}
+        variant="outlined">Get Translators</Button>
+      <TranslatorList translators={data} />
+      <ToastContainer />
+    </Container>
   )
 }
 

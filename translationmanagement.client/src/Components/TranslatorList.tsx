@@ -1,7 +1,7 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material'
 import Translator from '../Translator'
 import TranslatorItem from './TranslatorItem'
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
 export interface TranslatorListProps {
     translators: Translator[];
