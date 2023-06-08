@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.CQRS.CommandHandlers
 {
-    public class CreateTranslatorHandler : IRequestHandler<CreateTranslator, bool>
+    public sealed class CreateTranslatorHandler : IRequestHandler<CreateTranslator, bool>
     {
         private readonly IMapper mapper;
         private readonly ITranslatorRepository repository;

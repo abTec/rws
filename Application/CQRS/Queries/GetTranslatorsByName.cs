@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Application.CQRS.Queries
 {
-    public class GetTranslatorsByName : IRequest<ICollection<TranslatorDto>>
+    public sealed class GetTranslatorsByName : IRequest<ICollection<TranslatorDto>>
     {
         public string Name { get; set; }
     }

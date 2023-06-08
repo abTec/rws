@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Common
 {
-    public class FileProcessor : IFileProcessor
+    public sealed class FileProcessor : IFileProcessor
     {
         public async Task<(string content, string customer)> ProcessFileAsync(IFormFile file, string customer)
         {
