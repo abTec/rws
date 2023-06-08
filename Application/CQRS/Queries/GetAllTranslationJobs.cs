@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Application.CQRS.Queries
 {
-    public class GetAllTranslationJobs : IRequest<ICollection<TranslationJobDto>>
+    public sealed class GetAllTranslationJobs : IRequest<ICollection<TranslationJobDto>>
     {
     }
 }

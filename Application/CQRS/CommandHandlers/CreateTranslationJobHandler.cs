@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.CQRS.CommandHandlers
 {
-    public class CreateTranslationJobHandler : IRequestHandler<CreateTranslationJob, bool>
+    public sealed class CreateTranslationJobHandler : IRequestHandler<CreateTranslationJob, bool>
     {
         private readonly ITranslationJobRepository _repository;
         private readonly IPriceCalculator _priceCalculator;

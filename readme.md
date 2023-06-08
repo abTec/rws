@@ -43,7 +43,7 @@ our backend API and retrieve the list of all translators in our database. The re
 
 ### How to run
 
-Please run startup API project under Docker. Unfortunately I had no time to include react client in docker, so you need to run React app with right click on project -> Debug -> Start New Instance 
+Please run startup API project under Docker. Unfortunately I had no time to include react client in docker, so you need to run React app with right click on project -> Debug -> Start New Instance. Also you probably need to change port in package.json to match Docker ServicePort. :(
 
 # Final Words
 ------------

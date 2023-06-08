@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.CQRS.Commands
 {
-    public class CreateTranslator : IRequest<bool>
+    public sealed class CreateTranslator : IRequest<bool>
     {
         public TranslatorDto Translator { get; set; }
     }

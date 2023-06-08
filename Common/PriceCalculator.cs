@@ -2,7 +2,7 @@
 
 namespace Common
 {
-    public class PriceCalculator : IPriceCalculator
+    public sealed class PriceCalculator : IPriceCalculator
     {
         /// <summary>
         /// todo settings

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.CQRS.CommandHandlers
 {
-    public class UpdateTranslatorHandler : IRequestHandler<UpdateTranslator, bool>
+    public sealed class UpdateTranslatorHandler : IRequestHandler<UpdateTranslator, bool>
     {
         private readonly ITranslatorRepository _repository;
 

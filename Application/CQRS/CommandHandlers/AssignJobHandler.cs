@@ -2,15 +2,12 @@
 using Application.CQRS.Commands;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.CQRS.CommandHandlers
 {
-    public class AssignJobHandler : IRequestHandler<AssignJob, bool>
+    public sealed class AssignJobHandler : IRequestHandler<AssignJob, bool>
     {
         private readonly ITranslationJobRepository _jobRepository;
         private readonly ITranslatorRepository _translatorRepository;

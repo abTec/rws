@@ -1,13 +1,12 @@
 ﻿using Application.Contracts;
 using Application.CQRS.Commands;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.CQRS.CommandHandlers
 {
-    internal class UpdateTranslationJobHandler : IRequestHandler<UpdateTranslationJob, bool>
+    public sealed class UpdateTranslationJobHandler : IRequestHandler<UpdateTranslationJob, bool>
     {
         private readonly ITranslationJobRepository _repository;
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.CQRS.QueryHandlers
 {
-    public class GetAllTranslationJobsHandler : IRequestHandler<GetAllTranslationJobs, ICollection<TranslationJobDto>>
+    public sealed class GetAllTranslationJobsHandler : IRequestHandler<GetAllTranslationJobs, ICollection<TranslationJobDto>>
     {
         private readonly IMapper mapper;
         private readonly ITranslationJobRepository repository;
