@@ -47,7 +47,15 @@ Please run startup API project under Docker. Unfortunately I had no time to incl
 
 # Final Words
 ------------
-What could I have done better? There are still gadzillion of things how to improve this solution e.g.: UnitOfWork, AOP principles to Logging and stuff, better logger (Serilog is cool). Better separation for configuration of IoC container etc.
+What could I have done better? There are still gadzillion of things how to improve this solution e.g.:
+* UnitOfWork
+* AOP principles to Logging and stuff
+* Upgrade to NET 6
+* Global usings
+* Update to minimal API to get rid of Controllers
+* better logger (Serilog is cool)
+* Better separation for configuration of IoC container
+* 
 But this homework should be few hours job so I just stopped :D I'm going for a beer now
 
 ORIGINAL MD FOLLOWS
